@@ -1,8 +1,6 @@
-import { Router, Status } from './deps.ts';
+import { Router } from './deps.ts';
+import { rootHandler } from './middlewares/mod.ts'
 
 export const router = new Router();
 
-router.get("/", (ctx) => {
-  ctx.response.status = Status.OK;
-  ctx.response.body = "Todo list API with 🦕";
-})
+router.get("/", rootHandler.getHome)
