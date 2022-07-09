@@ -1,8 +1,10 @@
 import { Application, bold, yellow } from './deps.ts';
 import { router } from './router.ts';
+import { logger } from './middlewares/logger.ts';
 
 const app = new Application();
 
+app.use(logger)
 app.use(router.routes());
 app.use(router.allowedMethods());
 
