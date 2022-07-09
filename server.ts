@@ -3,6 +3,12 @@ import { Application, bold, Router, yellow } from './deps.ts';
 const app = new Application();
 const router = new Router();
 
+router.get("/", (ctx) => {
+  console.log(ctx);
+  ctx.response.status = 200;
+  ctx.response.body = "Todo list API with 🦕";
+})
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 
