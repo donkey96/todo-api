@@ -1,11 +1,8 @@
 import { RouterContext, Status } from '../deps.ts';
-
-const FILE_PATH = './db/todos.json';
+import { todoModel } from '../models/mod.ts';
 
 export const getAll = async (ctx: RouterContext<any>) => {
-  const data = await Deno.readFile(FILE_PATH);
-  const decoder = new TextDecoder();
-  const todos = JSON.parse(decoder.decode(data));
+  const todos = await todoModel.getAll();
   ctx.response.status = Status.OK;
   ctx.response.body = {
     data: todos,
