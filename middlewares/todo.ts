@@ -10,11 +10,9 @@ export const getAll = async (ctx: RouterContext<any>) => {
 export const get = async (ctx: RouterContext<any>) => {
   const params = await getParams(ctx);
   const [todo, error] = await todoModel.get(params);
-
   if (error) {
     return handleError(ctx, error);
   }
-
   handleOK(ctx, todo);
 };
 
@@ -27,10 +25,17 @@ export const create = async (ctx: RouterContext<any>) => {
 export const update = async (ctx: RouterContext<any>) => {
   const params = await getParams(ctx);
   const [_, error] = await todoModel.update(params);
-
   if (error) {
     return handleError(ctx, error);
   }
+  handleOK(ctx, 'success');
+};
 
+export const remove = async (ctx: RouterContext<any>) => {
+  const params = await getParams(ctx);
+  const [_, error] = await todoModel.remove(params);
+  if (error) {
+    return handleError(ctx, error);
+  }
   handleOK(ctx, 'success');
 };
