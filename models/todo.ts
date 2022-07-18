@@ -32,7 +32,7 @@ export const create = async ({ title }: Pick<Todo, 'title'>): Promise<true> => {
   const todos = await getAll();
   const id = uuid.generate();
   const now = new Date().toISOString();
-
+  console.log(title);
   await updateAll([...todos, { id, done: false, title, createdAt: now, updatedAt: now }],
   );
   return true;
@@ -67,11 +67,11 @@ export const update = async (params: Partial<Todo> & Pick<Todo, 'id'>): Promise<
 export const remove = async ({ id }: Pick<Todo, 'id'>): Promise<Result<true>> => {
   const todos = await getAll();
   const todosMap = toMap(todos);
-
   if (!todosMap.has(id)) {
     return [undefined, new Error('cannot find item')];
   }
-
+  console.log(todosMap);
+  console.log(id);
   todosMap.delete(id);
   await updateAll(fromMap(todosMap));
   return [true, undefined];
