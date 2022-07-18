@@ -1,4 +1,4 @@
-import { toMap } from './utils.ts';
+import { fromMap, toMap } from './utils.ts';
 import { uuid } from '../deps.ts';
 
 interface Todo {
@@ -42,4 +42,24 @@ const updateAll = async (todos: Todo[]): Promise<true> => {
   const encoder = new TextEncoder();
   Deno.writeFile(FILE_PATH, encoder.encode(JSON.stringify(todos)));
   return true;
+}
+
+export const update = async (params: Partial<Todo> & Pick<Todo, 'id'>): Promise<Result<true>> => {
+  const todos = await getAll();
+  const todosMap = toMap(todos);
+  const current = todosMap.get(params.id);
+
+  if (!current) {
+    return [undefined, new Error('cannot find item')];
+  }
+
+  todosMap.set(params.id, {
+    ...current,
+    ...params,
+    updatedAt: new Date().toISOString(),
+  });
+
+  await updateAll(fromMap(todosMap));
+
+  return [true, undefined];
 }
