@@ -23,3 +23,14 @@ export const create = async (ctx: RouterContext<any>) => {
   await todoModel.create(params);
   handleOK(ctx, 'success');
 };
+
+export const update = async (ctx: RouterContext<any>) => {
+  const params = await getParams(ctx);
+  const [_, error] = await todoModel.update(params);
+
+  if (error) {
+    return handleError(ctx, error);
+  }
+
+  handleOK(ctx, 'success');
+};
