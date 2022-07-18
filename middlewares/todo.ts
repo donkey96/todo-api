@@ -17,6 +17,7 @@ export const get = async (ctx: RouterContext<any>) => {
 };
 
 export const create = async (ctx: RouterContext<any>) => {
+  console.log(ctx.request);
   const params = await getParams(ctx);
   await todoModel.create(params);
   handleOK(ctx, 'success');

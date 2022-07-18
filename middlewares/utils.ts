@@ -1,8 +1,8 @@
 import { RouterContext, Status } from '../deps.ts';
 
 export const getParams = async (ctx: RouterContext<any>) => {
-  const { value } = await ctx.request.body();
-
+  const value = await ctx.request.body().value;
+  console.log(value);
   return {
     ...ctx.params,
     ...value,
